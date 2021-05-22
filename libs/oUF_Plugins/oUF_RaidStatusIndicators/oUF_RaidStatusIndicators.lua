@@ -184,9 +184,9 @@ local function Update(self, event, unit)
 					if hasAggro and hasAggro > 0 then
 						indicator:Show()
 						indicator.cd:Hide()
-						
+
 						indicator.texture:SetTexture([[Interface\Buttons\WHITE8X8]])
-						
+
 						local color = hasAggro == 1 and oUF.colors.reaction[4] or oUF.colors.reaction[1]
 						indicator.texture:SetVertexColor(unpack(color))
 					else
@@ -196,9 +196,9 @@ local function Update(self, event, unit)
 					if legacyThreat then
 						indicator:Show()
 						indicator.cd:Hide()
-						
+
 						indicator.texture:SetTexture([[Interface\Buttons\WHITE8X8]])
-						
+
 						local color = oUF.colors.reaction[1]
 						indicator.texture:SetVertexColor(unpack(color))
 					else
@@ -294,6 +294,45 @@ local function Update(self, event, unit)
 					else
 						indicator:Hide()
 					end
+                elseif indicator.type == "minduration" and indicator.nameID then
+                    -- find the aura with the least duration left
+                    local rank, hasicon, Type, hasduration, hasexpirationTime
+                    for k,spell in ipairs(indicator.nameID) do
+                        local t_rank, t_hasicon, _, t_Type, t_hasduration, t_hasexpirationTime = select(1, checkAura(unit, {spell}))
+                        if t_hasicon then
+                            if (not hasduration and not hasexpirationTime) or (t_hasexpirationTime - GetTime() < hasexpirationTime - GetTime()) then
+                                rank = t_rank
+                                hasicon = t_hasicon
+                                Type = t_Type
+                                hasduration = t_hasduration
+                                hasexpirationTime = t_hasexpirationTime
+                            end
+                        end
+                    end
+
+                    if hasicon then
+                        indicator:Show()
+                        if indicator.showTexture then
+                            indicator.texture:SetTexture(hasicon)
+                            indicator.texture:SetVertexColor(1,1,1)
+                        else
+                            local color = oUF.colors.debuff[Type]
+                            indicator.texture:SetTexture([[Interface\Buttons\WHITE8X8]])
+                            if color then
+                                indicator.texture:SetVertexColor(unpack(color))
+                            else
+                                indicator.texture:SetVertexColor(0,0,0)
+                            end
+                        end
+                        if indicator.timer then
+                            indicator.cd:Show()
+                            indicator.cd:SetCooldown(hasexpirationTime - hasduration, hasduration)
+                        else
+                            indicator.cd:Hide()
+                        end
+                    else
+                        indicator:Hide()
+                    end
 				else
 					indicator:Hide()
 				end
@@ -317,7 +356,7 @@ end
 local function checkCurableSpells(self, event, arg1)
 	if event == "UNIT_PET" and (arg1 ~= "player" or playerClass ~= "WARLOCK") then return end
 	table.wipe(canCure)
-	
+
 	if playerClass == "WARLOCK" then
 		if IsUsableSpell(GetSpellInfo(19505)) then
 			canCure["Magic"] = true
@@ -408,7 +447,7 @@ local function Disable(self)
 		self:UnregisterEvent("LEARNED_SPELL_IN_TAB", checkCurableSpells)
 		self:UnregisterEvent("PLAYER_LOGIN", checkCurableSpells)
 		self:UnregisterEvent("UNIT_PET", checkCurableSpells)
-		
+
 	end
 end
 
