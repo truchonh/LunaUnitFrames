@@ -169,7 +169,7 @@ function LUF:CreateConfig()
 			end
 		end
 		db[info[#info]] = value
-		
+
 		LUF:SetupHeader(info[1])
 	end
 
@@ -191,7 +191,7 @@ function LUF:CreateConfig()
 			end
 		end
 		db[info[#info]] = value
-		
+
 		LUF:PlaceFrame(LUF.frameIndex[info[1]])
 	end
 
@@ -343,7 +343,7 @@ function LUF:CreateConfig()
 		elseif unit == "raid" then
 			LUF:SetupHeader("raidpet")
 		end
-		
+
 	end
 
 	local function setHideRaid(info, value)
@@ -712,7 +712,7 @@ function LUF:CreateConfig()
 					desc = L["Set the height."],
 					type = "range",
 					order = 8,
-					min = 1,
+					min = 0.5,
 					max = 10,
 					step = 0.1,
 				},
@@ -3078,6 +3078,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3100,8 +3101,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3109,8 +3110,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3149,6 +3150,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3171,8 +3173,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3180,8 +3182,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3220,6 +3222,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3242,8 +3245,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3251,8 +3254,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3291,6 +3294,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3313,8 +3317,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3322,8 +3326,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3362,6 +3366,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3384,8 +3389,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3393,8 +3398,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3433,6 +3438,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3455,8 +3461,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3464,8 +3470,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3504,6 +3510,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3526,8 +3533,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3535,8 +3542,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3575,6 +3582,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3597,8 +3605,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3606,8 +3614,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -3646,6 +3654,7 @@ function LUF:CreateConfig()
 							name = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID"] or L["Name (partial) or ID"] end,
 							desc = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "missing" and L["Name (exact) or ID of the effect to track. Use ; as a logical AND and / as logical OR. Also supports [mana] to only check on mana classes. Example: Arcane Intellect[mana]/Arcane Brilliance[mana];Dampen Magic"] or L["Name (partial) or ID of the effect to track. Use ; as a seperator for multiple auras"] end,
 							type = "input",
+                            width = "full",
 							order = 4,
 							hidden = function(info) return LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "aggro" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "legacythreat" or LUF.db.profile.units[info[#info-3]].squares[info[#info-1]].type == "dispel" end,
 							validate = validateMissingBuffInput,
@@ -3668,8 +3677,8 @@ function LUF:CreateConfig()
 							name = L["X Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 7,
 							step = 1,
 						},
@@ -3677,8 +3686,8 @@ function LUF:CreateConfig()
 							name = L["Y Position"],
 							desc = L["Offset"],
 							type = "range",
-							min = -50,
-							max = 50,
+							min = -150,
+							max = 150,
 							order = 8,
 							step = 1,
 						},
@@ -8104,7 +8113,7 @@ SlashCmdList["LUNAUF"] = function(msg)
 	msg = msg and string.lower(msg)
 	if( msg and string.match(msg, "^profile (.+)") ) then
 		local profile = string.match(msg, "^profile (.+)")
-		
+
 		for id, name in pairs(LUF.db:GetProfiles()) do
 			if( string.lower(name) == profile ) then
 				LUF.db:SetProfile(name)
@@ -8115,7 +8124,7 @@ SlashCmdList["LUNAUF"] = function(msg)
 		LUF:Print(string.format(L["Cannot find any profiles named \"%s\"."], profile))
 		return
 	end
-	
+
 	local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 	AceConfigDialog:Open("LunaUnitFrames")
 end
