@@ -26,15 +26,15 @@ L.arena = ARENA
 LUF.stateMonitor = CreateFrame("Frame", nil, nil, "SecureHandlerBaseTemplate")
 LUF.stateMonitor:WrapScript(LUF.stateMonitor, "OnAttributeChanged", [[
 	if( name == "partyEnabled" or name == "partytargetEnabled" or name == "partypetEnabled" ) then return end
-	
+
 	local partyFrame = self:GetFrameRef("partyFrame")
 	local partytargetFrame = self:GetFrameRef("partytargetFrame")
 	local partypetFrame = self:GetFrameRef("partypetFrame")
-	
+
 	local status = self:GetAttribute("state-raidstatus")
 	local setting = self:GetAttribute("hideraid")
 	local showParty = setting == "never" or status ~= "full" and setting == "5man" or setting == "always" and status == "none"
-	
+
 	if partyFrame and self:GetAttribute("partyEnabled") then
 		partyFrame:SetAttribute("raidHidden", not showParty)
 		if showParty then
@@ -151,15 +151,15 @@ end
 function LUF:LoadoUFSettings()
 	self.oUF.LUF_fakePlayerClassification = self.db.profile.units.player.indicators.elite.enabled and self.db.profile.units.player.indicators.elite.type or nil
 	self.oUF.LUF_fakePetClassification = self.db.profile.units.pet.indicators.elite.enabled and self.db.profile.units.pet.indicators.elite.type or nil
-	
+
 	local colors = self.db.profile.colors
 	self.oUF.colors.smooth = { colors.red.r, colors.red.g, colors.red.b, colors.yellow.r, colors.yellow.g, colors.yellow.b, colors.green.r, colors.green.g, colors.green.b }
 	self.oUF.colors.health = {colors.static.r, colors.static.g, colors.static.b}
-	
+
 	self.oUF.colors.disconnected = {colors.offline.r, colors.offline.g, colors.offline.b}
 	self.oUF.colors.tapped = {colors.tapped.r, colors.tapped.g, colors.tapped.b}
 	self.oUF.colors.civilian = {colors.enemyCivilian.r, colors.enemyCivilian.g, colors.enemyCivilian.b}
-	
+
 	self.oUF.colors.class.HUNTER = {colors.HUNTER.r, colors.HUNTER.g, colors.HUNTER.b}
 	self.oUF.colors.class.WARLOCK = {colors.WARLOCK.r, colors.WARLOCK.g, colors.WARLOCK.b}
 	self.oUF.colors.class.PRIEST = {colors.PRIEST.r, colors.PRIEST.g, colors.PRIEST.b}
@@ -169,7 +169,7 @@ function LUF:LoadoUFSettings()
 	self.oUF.colors.class.DRUID = {colors.DRUID.r, colors.DRUID.g, colors.DRUID.b}
 	self.oUF.colors.class.SHAMAN = {colors.SHAMAN.r, colors.SHAMAN.g, colors.SHAMAN.b}
 	self.oUF.colors.class.WARRIOR = {colors.WARRIOR.r, colors.WARRIOR.g, colors.WARRIOR.b}
-	
+
 	self.oUF.colors.power.MANA = {colors.MANA.r, colors.MANA.g, colors.MANA.b}
 	self.oUF.colors.power[0] = self.oUF.colors.power.MANA
 	self.oUF.colors.power.RAGE = {colors.RAGE.r, colors.RAGE.g, colors.RAGE.b}
@@ -180,11 +180,11 @@ function LUF:LoadoUFSettings()
 	self.oUF.colors.power[3] = self.oUF.colors.power.ENERGY
 	self.oUF.colors.power.COMBO_POINTS = {colors.COMBOPOINTS.r, colors.COMBOPOINTS.g, colors.COMBOPOINTS.b}
 	self.oUF.colors.power[4] = self.oUF.colors.power.COMBOPOINTS
-	
+
 	self.oUF.colors.happiness[1] = {colors.unhappy.r, colors.unhappy.g, colors.unhappy.b}
 	self.oUF.colors.happiness[2] = {colors.content.r, colors.content.g, colors.content.b}
 	self.oUF.colors.happiness[3] = {colors.happy.r, colors.happy.g, colors.happy.b}
-	
+
 	self.oUF.colors.reaction[1] = {colors.hated.r, colors.hated.g, colors.hated.b}
 	self.oUF.colors.reaction[2] = {colors.hostile.r, colors.hated.g, colors.hated.b}
 	self.oUF.colors.reaction[3] = {colors.unfriendly.r, colors.unfriendly.g, colors.unfriendly.b}
@@ -193,12 +193,12 @@ function LUF:LoadoUFSettings()
 	self.oUF.colors.reaction[6] = {colors.honored.r, colors.honored.g, colors.honored.b}
 	self.oUF.colors.reaction[7] = {colors.revered.r, colors.revered.g, colors.revered.b}
 	self.oUF.colors.reaction[8] = {colors.exalted.r, colors.exalted.g, colors.exalted.b}
-	
+
 	self.oUF.colors.threat[1] = self.oUF.colors.reaction[8]
 	self.oUF.colors.threat[2] = self.oUF.colors.reaction[4]
 	self.oUF.colors.threat[3] = self.oUF.colors.reaction[2]
 	self.oUF.colors.threat[4] = self.oUF.colors.reaction[1]
-	
+
 	self.oUF.TagsWithHealTimeFrame = self.db.profile.inchealTime
 	self.oUF.TagsWithHealDisableHots = self.db.profile.disablehots
 end
@@ -217,9 +217,9 @@ function LUF:ResetColors()
 end
 
 function LUF:OnLoad()
-	
+
 	self:LoadDefaults()
-	
+
 	-- Initialize DB
 	self.db = LibStub:GetLibrary("AceDB-3.0"):New("LunaUFDB", self.defaults, true)
 	self.db.RegisterCallback(self, "OnProfileChanged", "ProfilesChanged")
@@ -228,7 +228,7 @@ function LUF:OnLoad()
 	self.db.RegisterCallback(self, "OnProfileDeleted", "OnProfileDeleted")
 
 	self.db.profile.version = self.version
-	
+
 	SML.RegisterCallback(self, "LibSharedMedia_Registered", "MediaRegistered")
 	SML.RegisterCallback(self, "LibSharedMedia_SetGlobal", "MediaForced")
 
@@ -260,7 +260,7 @@ end
 function LUF:MediaRegistered(event, mediaType, key)
 	if( mediaNeeded[mediaType] == key ) then
 		mediaNeeded[mediaType] = nil
-		
+
 		self:ReloadAll()
 	end
 end
@@ -271,14 +271,14 @@ end
 
 function LUF:ProfilesChanged()
 	if( resetTimer ) then resetTimer:Hide() end
-	
+
 	self.db:RegisterDefaults(self.defaults)
-	
+
 	-- No active layout, register the default one
 	if( not self.db.profile.loadedLayout ) then
 		self:LoadDefaults()
 	end
-	
+
 	self:LoadoUFSettings()
 	self:HideBlizzardFrames()
 	self:ReloadAll()
@@ -297,7 +297,7 @@ function LUF:ProfileReset()
 			self:Hide()
 		end)
 	end
-	
+
 	resetTimer:Show()
 end
 
@@ -335,10 +335,10 @@ function LUF:AutoswitchProfile(event)
 				groupType = "RAID5"
 			elseif maxGrp == 2 then
 				groupType = "RAID10"
-			elseif maxGrp == 3 then
-				groupType = "RAID15"
-			elseif maxGrp == 4 then
+			elseif maxGrp == 3 or maxGrp == 4 then
 				groupType = "RAID20"
+			elseif maxGrp == 5 then
+				groupType = "RAID25"
 			else
 				groupType = "RAID40"
 			end
@@ -416,20 +416,20 @@ function LUF:HideBlizzardFrames()
 				CompactRaidFrameManager:UnregisterAllEvents()
 				CompactRaidFrameContainer:UnregisterAllEvents()
 				if( InCombatLockdown() ) then return end
-	
+
 				CompactRaidFrameManager:Hide()
 				local shown = CompactRaidFrameManager_GetSetting("IsShown")
 				if( shown and shown ~= "0" ) then
 					CompactRaidFrameManager_SetSetting("IsShown", "0")
 				end
 			end
-			
+
 			hooksecurefunc("CompactRaidFrameManager_UpdateShown", function()
 				if( self.db.profile.hidden.raid ) then
 					hideRaid()
 				end
 			end)
-			
+
 			hideRaid()
 			CompactRaidFrameContainer:HookScript("OnShow", hideRaid)
 			CompactRaidFrameManager:HookScript("OnShow", hideRaid)
@@ -505,7 +505,7 @@ local moduleSettings = {
 		mod:SetOrientation(config.vertical and "VERTICAL" or "HORIZONTAL")
 		if mod.__owner.unit == "pet" then
 			if config.enabled then
-				mod.__owner:RegisterEvent("UNIT_HAPPINESS", LUF.overrides["Health"].UpdateColor) -- Fix for bug in oUF not updating 
+				mod.__owner:RegisterEvent("UNIT_HAPPINESS", LUF.overrides["Health"].UpdateColor) -- Fix for bug in oUF not updating
 			else
 				mod.__owner:UnregisterEvent("UNIT_HAPPINESS", LUF.overrides["Health"].UpdateColor)
 			end
@@ -667,18 +667,18 @@ local moduleSettings = {
 local fstringoffsets = { left = 3, center = 0, right = -3 }
 function LUF.ApplySettings(frame)
 	local config = LUF.db.profile.units[frame:GetAttribute("oUF-guessUnit")]
-	
+
 	-- Background
 	local bgColor = LUF.db.profile.colors.background
 	frame.bg:SetVertexColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-	
+
 	-- Bars
 	for barname,barobj in pairs(frame.modules) do
 		if moduleSettings[barname] then
 			moduleSettings[barname](barobj, config[barname])
 		end
 	end
-	
+
 	-- Portrait
 	if frame.StatusPortrait then
 		frame.StatusPortrait.showStatus = config.portrait.showStatus
@@ -706,7 +706,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("RegenTicker")
 		end
 	end
-	
+
 	-- Additional Regen Ticker
 	if frame.AdditionalRegenTicker then
 		if (config.druidBar.ticker or config.druidBar.fivesecond) then
@@ -725,7 +725,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("RegenTickerAlt")
 		end
 	end
-	
+
 	-- Power Prediction
 	if frame.PowerPrediction then
 		if config.manaPrediction.enabled then
@@ -737,7 +737,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("PowerPrediction")
 		end
 	end
-	
+
 	-- Tags
 	for barname,fstrings in pairs(frame.tags) do
 		for side,fstring in pairs(fstrings) do
@@ -768,7 +768,7 @@ function LUF.ApplySettings(frame)
 			frame:Tag(fstring, barconfig[side].tagline)
 		end
 	end
-	
+
 	-- Indicators
 	for iname,iobj in pairs(frame.indicators) do
 		local objconfig = config.indicators[iname]
@@ -786,7 +786,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement(objdata.name)
 		end
 	end
-	
+
 	-- Range
 	if frame.Range then
 		if config.range.enabled then
@@ -797,7 +797,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("Range")
 		end
 	end
-	
+
 	-- Combat Fader
 	if frame.SimpleFader then
 		if config.fader.enabled then
@@ -809,14 +809,14 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("SimpleFader")
 		end
 	end
-	
+
 	-- Auras
 	if config.auras.buffs or config.auras.weaponbuffs or config.auras.debuffs then
 		frame:EnableElement("SimpleAuras")
 		local Auras = frame.SimpleAuras
 		local AuraConfig = config.auras
 		Auras.weapons = AuraConfig.weaponbuffs
-		
+
 		Auras.buffs = AuraConfig.buffs
 		Auras.buffAnchor = AuraConfig.buffpos
 		Auras.buffFilter = AuraConfig.filterbuffs
@@ -825,7 +825,7 @@ function LUF.ApplySettings(frame)
 		Auras.wrapBuffSide = AuraConfig.wrapbuffside
 		Auras.wrapBuff = AuraConfig.wrapbuff
 		Auras.buffOffset = AuraConfig.buffOffset
-		
+
 		Auras.debuffs = AuraConfig.debuffs
 		Auras.debuffAnchor = AuraConfig.debuffpos
 		Auras.debuffFilter = AuraConfig.filterdebuffs
@@ -843,13 +843,13 @@ function LUF.ApplySettings(frame)
 		Auras.showType = AuraConfig.bordercolor
 		Auras.disableOCC = LUF.db.profile.omnicc
 		Auras.disableBCC = LUF.db.profile.blizzardcc
-		
+
 		local auraborderType = LUF.db.profile.auraborderType
 		Auras.overlay = auraborderType and auraborderType ~= "blizzard" and "Interface\\AddOns\\LunaUnitFrames\\media\\textures\\borders\\border-" .. auraborderType
 	else
 		frame:DisableElement("SimpleAuras")
 	end
-	
+
 	-- Combat Text
 	if frame.CombatText then
 		frame.CombatText.feedbackFontHeight = config.combatText.size
@@ -866,7 +866,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("CombatText")
 		end
 	end
-	
+
 	-- Highlight
 	if frame.Highlight then
 		local target, mouseover, aggro, debuff = config.highlight.target, config.highlight.mouseover, config.highlight.aggro, config.highlight.debuff
@@ -882,7 +882,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("Highlight")
 		end
 	end
-	
+
 	-- Border Highlight
 	if frame.BorderHighlight then
 		local target, mouseover, aggro, debuff = config.borders.target, config.borders.mouseover, config.borders.aggro, config.borders.debuff
@@ -899,7 +899,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("BorderHighlight")
 		end
 	end
-	
+
 	--Squares
 	if frame.RaidStatusIndicators then
 		local isEnabled
@@ -937,7 +937,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("RaidStatusIndicators")
 		end
 	end
-	
+
 	--Healing Prediction
 	if frame.BetterHealthPrediction then
 		local healConfig = config.incHeal
@@ -957,7 +957,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("BetterHealthPrediction")
 		end
 	end
-	
+
 	--Arena Trinket
 	if frame.Trinket then
 		local trinketConfig = config.trinket
@@ -972,7 +972,7 @@ function LUF.ApplySettings(frame)
 			frame:DisableElement("Trinket")
 		end
 	end
-	
+
 	frame:UpdateAllElements("RefreshUnit")
 end
 
@@ -983,21 +983,21 @@ function LUF.PlaceModules(frame)
 	local frame = frame:IsObjectType("Statusbar") and frame:GetParent() or frame
 	local config = LUF.db.profile.units[frame:GetAttribute("oUF-guessUnit")]
 	if not config then return end
-	
+
 	wipe(horiz)
 	wipe(vert)
 	local attFrame, point = frame, "TOPLEFT"
 	local xOffset, yOffset = 1, -1
 	local usableX, usableY = frame:GetWidth() - 2
 	local vertValue, horizValue = 0, 0
-	
+
 	frame.tags.top.left:SetWidth(usableX*config.tags.top.left.size/100)
 	frame.tags.top.center:SetWidth(usableX*config.tags.top.center.size/100)
 	frame.tags.top.right:SetWidth(usableX*config.tags.top.right.size/100)
 	frame.tags.bottom.left:SetWidth(usableX*config.tags.bottom.left.size/100)
 	frame.tags.bottom.center:SetWidth(usableX*config.tags.bottom.center.size/100)
 	frame.tags.bottom.right:SetWidth(usableX*config.tags.bottom.right.size/100)
-	
+
 	for k,v in pairs(frame.modules) do
 		v:ClearAllPoints()
 		if config[k].enabled then
@@ -1032,7 +1032,7 @@ function LUF.PlaceModules(frame)
 	if vertValue > 0 and horizValue > 0 then
 		usableX = usableX - 1
 	end
-	
+
 	-- Horizontal bars
 	if config.portrait.enabled and config.portrait.alignment == "LEFT" then
 		xOffset = xOffset + frame.modules.portrait:GetWidth()
@@ -1077,7 +1077,7 @@ function LUF.PlaceModules(frame)
 		attrPoint = "BOTTOMLEFT"
 		attFrame = frame.modules[data.key]
 	end
-	
+
 	-- Vertical bars
 	attFrame = frame
 	point = "TOPRIGHT"
@@ -1120,11 +1120,11 @@ function LUF:PlaceFrame(frame)
 	if config.positions then
 		config = config.positions[tonumber(strsub(frame:GetName(),14))]
 	end
-	
+
 	if config.anchorTo == "UIParent" then
 		scale = frame:GetScale() * UIParent:GetScale()
 	end
-	
+
 	frame:ClearAllPoints()
 	frame:SetPoint(config.point, _G[config.anchorTo], config.relativePoint, (config.x / scale), (config.y / scale))
 end
@@ -1146,7 +1146,7 @@ local initialConfigFunction = [[
 		self:SetAttribute("refreshUnitChange", parent:GetAttribute("refreshUnitChange"))
 	end
 	self:SetAttribute("oUF-guessUnit",unit)
-	
+
 	self:SetHeight(parent:GetAttribute("x-height") or 1)
 	self:SetWidth(parent:GetAttribute("x-width") or 1)
 	self:SetScale(parent:GetAttribute("x-scale") or 1)
@@ -1167,7 +1167,7 @@ local refreshUnitChange = [[
 function LUF:SpawnUnits()
 	oUF:RegisterStyle("LunaUnitFrames", self.InitializeUnit)
 	oUF:RegisterInitCallback(function(frame) LUF.PlaceModules(frame) LUF.ApplySettings(frame) end)
-	
+
 	for unit, config in pairs(self.db.profile.units) do
 		if self.HeaderFrames[unit] then
 			if unit == "raid" then
@@ -1259,7 +1259,7 @@ local function SetArenaHeader(header, config)
 			elseif config.enabled and not frame:IsEnabled() then
 				frame:Enable()
 			end
-			
+
 			frame:ClearAllPoints()
 			if ( num == 1 ) then
 				frame:SetPoint(point, currentAnchor, point, 0, 0)
@@ -1270,7 +1270,7 @@ local function SetArenaHeader(header, config)
 			frame:SetWidth(config.width)
 			frame:SetHeight(config.height)
 			frame:SetScale(config.scale)
-			
+
 			if config.enableFocus then
 				frame:SetAttribute("*type2", "focus")
 			else
@@ -1336,7 +1336,7 @@ local function SetHeaderAttributes(header, config)
 			header.grpNumber:SetPoint("BOTTOM", header, "TOP")
 		end
 	end
-	
+
 	local ButtonName = header:GetName() .. "UnitButton"
 	local num = 1
 	local frame = _G[ButtonName .. num]
@@ -1353,7 +1353,7 @@ local function SetHeaderAttributes(header, config)
 		header:Hide()
 		header:Show()
 	end
-	
+
 	if not LUF.db.profile.locked then
 		LUF:UpdateMovers()
 	end
@@ -1394,7 +1394,7 @@ local classOrder = {
 function LUF:SetupHeader(headerUnit)
 	local header
 	local config = self.db.profile.units[headerUnit] or self.db.profile.units.raid
-	
+
 	if headerUnit == "raid" then
 		if not self.frameIndex["raid1"] then return end
 		for id=1,9 do
@@ -1426,7 +1426,7 @@ end
 
 function LUF:ReloadHeaderUnits(headerUnit)
 	local header
-	
+
 	if headerUnit == "raid" then
 		if not self.frameIndex["raid1"] then return end
 		for id=1,9 do
@@ -1444,7 +1444,7 @@ function LUF:ReloadSingleUnit(unit)
 	local frame = self.frameIndex[unit]
 	local config = self.db.profile.units[unit]
 	--local res = GetScreenHeight() / strmatch(({GetScreenResolutions()})[GetCurrentResolution()], "(%d+)$")
-	
+
 	if not LUF.InCombatLockdown then
 		frame:SetWidth(config.width)
 		frame:SetHeight(config.height)
@@ -1452,7 +1452,7 @@ function LUF:ReloadSingleUnit(unit)
 	end
 	LUF.PlaceModules(frame, unit)
 	LUF.ApplySettings(frame)
-	
+
 	if not config.enabled and frame:IsEnabled() then
 		frame:Disable()
 	elseif config.enabled and not frame:IsEnabled() then
