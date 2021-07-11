@@ -1,7 +1,7 @@
 -- Luna Unit Frames 4.0 by Aviana
 
 LUF = select(2, ...)
-LUF.version = 4150
+LUF.version = 4190
 
 local L = LUF.L
 local ACR = LibStub("AceConfigRegistry-3.0", true)
@@ -321,10 +321,10 @@ end
 
 function LUF:AutoswitchProfile(event)
 	local profile
-	if event == "DISPLAY_SIZE_CHANGED" then
+	if event == "DISPLAY_SIZE_CHANGED" and self.db.char.switchtype == "RESOLUTION" then
 		local resolutions = {GetScreenResolutions()}
 		profile = self.db.char.resdb[resolutions[GetCurrentResolution()]]
-	else
+	elseif event == "GROUP_ROSTER_UPDATE" and self.db.char.switchtype == "GROUP" then
 		local groupType
 		if IsInRaid() then
 			local maxGrp = 1
@@ -402,6 +402,8 @@ end
 local active_hiddens = {
 }
 function LUF:HideBlizzardFrames()
+	if not LUF.db then return end --Prevent calling this before the db is loaded
+	
 	if( LUF.db.profile.hidden.cast ) then
 		handleFrame(CastingBarFrame)
 		active_hiddens.cast = true
@@ -1475,8 +1477,12 @@ function LUF:ReloadAll()
 end
 
 local function ScanRoster()
-	ChatFrame1:AddMessage("Running fix")
 	timerRunning = nil
+	if not LUF.InCombatLockdown then
+		for id=1,9 do
+			LUF.frameIndex["raid"..id]:SetAttribute("ForceUpdate", math.random())
+		end
+	end
 end
 
 local timerRunning
@@ -1485,7 +1491,6 @@ local function CheckforRosterBug()
 		for i=1, GetNumGroupMembers() do
 			local name = GetRaidRosterInfo(i)
 			if not timerRunning and not name then
-				ChatFrame1:AddMessage("Potentially found the bug")
 				timerRunning = true
 				C_Timer.After(1, ScanRoster)
 			end
@@ -1516,12 +1521,14 @@ frame:SetScript("OnEvent", function(self, event, addon)
 		end
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		LUF.InCombatLockdown = nil
-		LUF:AutoswitchProfile(queuedEvent)
+		if queuedEvent then
+			LUF:AutoswitchProfile(queuedEvent)
+		end
 		queuedEvent = nil
 		if( ACR ) then
 			ACR:NotifyChange("LunaUnitFrames")
 		end
-	elseif event == "DISPLAY_SIZE_CHANGED" and LUF.db.char.switchtype == "RESOLUTION" then
+	elseif event == "DISPLAY_SIZE_CHANGED" then
 		if not LUF.InCombatLockdown then
 			LUF:AutoswitchProfile(event)
 		else
@@ -1529,12 +1536,10 @@ frame:SetScript("OnEvent", function(self, event, addon)
 		end
 	elseif event == "GROUP_ROSTER_UPDATE" then
 		CheckforRosterBug()
-		if LUF.db.char.switchtype == "GROUP" then
-			if not LUF.InCombatLockdown then
-				LUF:AutoswitchProfile(event)
-			else
-				queuedEvent = event
-			end
+		if not LUF.InCombatLockdown then
+			LUF:AutoswitchProfile(event)
+		else
+			queuedEvent = event
 		end
 	end
 end)
