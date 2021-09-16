@@ -1,7 +1,7 @@
 -- Luna Unit Frames 4.0 by Aviana
 
 LUF = select(2, ...)
-LUF.version = 4190
+LUF.version = 4210
 
 local L = LUF.L
 local ACR = LibStub("AceConfigRegistry-3.0", true)
@@ -348,6 +348,13 @@ function LUF:AutoswitchProfile(event)
 			groupType = "SOLO"
 		end
 		profile = self.db.char.grpdb[groupType]
+	elseif event == "PLAYER_ENTERING_WORLD" and self.db.char.switchtype == "ARENA" then
+		if select(2,IsInInstance()) == "arena" then
+			profile = self.db.char.grpdb["ARENA"]
+			self.db.char.grpdb["NONARENA"] = self.db:GetCurrentProfile()
+		elseif self.db.char.grpdb["NONARENA"] then
+			profile = self.db.char.grpdb["NONARENA"]
+		end
 	end
 	if profile and profile ~= self.db:GetCurrentProfile() then
 		self.db:SetProfile(profile)
@@ -824,6 +831,7 @@ function LUF.ApplySettings(frame)
 		Auras.buffFilter = AuraConfig.filterbuffs
 		Auras.buffSize = AuraConfig.buffsize
 		Auras.largeBuffSize = AuraConfig.enlargedbuffsize
+		Auras.showSteal = AuraConfig.showSteal
 		Auras.wrapBuffSide = AuraConfig.wrapbuffside
 		Auras.wrapBuff = AuraConfig.wrapbuff
 		Auras.buffOffset = AuraConfig.buffOffset
@@ -1213,6 +1221,9 @@ function LUF:SpawnUnits()
 			end
 		end
 	end
+	for unit,frame in pairs(self.frameIndex) do
+		frame:SetFrameStrata(self.db.profile.strata)
+	end
 	self.stateMonitor:SetFrameRef("partyFrame", self.frameIndex["party"])
 	self.stateMonitor:SetFrameRef("partytargetFrame", self.frameIndex["partytarget"])
 	self.stateMonitor:SetFrameRef("partypetFrame", self.frameIndex["partypet"])
@@ -1504,6 +1515,7 @@ frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_REGEN_DISABLED")
 frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:SetScript("OnEvent", function(self, event, addon)
 	if( event == "PLAYER_LOGIN" ) then
 		LUF:OnLoad()
@@ -1536,6 +1548,12 @@ frame:SetScript("OnEvent", function(self, event, addon)
 		end
 	elseif event == "GROUP_ROSTER_UPDATE" then
 		CheckforRosterBug()
+		if not LUF.InCombatLockdown then
+			LUF:AutoswitchProfile(event)
+		else
+			queuedEvent = event
+		end
+	elseif event == "PLAYER_ENTERING_WORLD" then
 		if not LUF.InCombatLockdown then
 			LUF:AutoswitchProfile(event)
 		else
