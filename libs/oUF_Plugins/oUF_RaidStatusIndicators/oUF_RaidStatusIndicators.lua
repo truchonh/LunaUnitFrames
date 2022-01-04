@@ -427,7 +427,13 @@ local function Enable(self)
 
 					indicator.count = countFrame:CreateFontString(nil, 'OVERLAY', 'NumberFontNormal')
 					local fontName = indicator.count:GetFont()
-					indicator.count:SetFont(fontName, 10, "OUTLINE")
+					local fontSize = 9
+					if indicator:GetWidth() > 22 then
+						fontSize = 14
+					elseif indicator:GetWidth() > 18 then
+						fontSize = 12
+					end
+					indicator.count:SetFont(fontName, fontSize, "OUTLINE")
 					indicator.count:SetPoint('BOTTOMRIGHT', countFrame, 'BOTTOMRIGHT', -1, 0)
 				end
 			end
