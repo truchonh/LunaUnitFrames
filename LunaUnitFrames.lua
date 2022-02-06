@@ -339,8 +339,8 @@ function LUF:AutoswitchProfile(event)
 				groupType = "RAID15"
 			elseif maxGrp == 4 then
 				groupType = "RAID20"
-			elseif maxGrp == 5 then
-				groupType = "RAID25"
+			elseif maxGrp == 6 then
+				groupType = "RAID30"
 			else
 				groupType = "RAID40"
 			end

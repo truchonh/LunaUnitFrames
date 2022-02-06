@@ -9954,7 +9954,7 @@ function LUF:CreateConfig()
 						type = "select",
 						order = 4,
 						hidden = function() return LUF.db.char.switchtype ~= "GROUP" end,
-						values = {["RAID40"]=L["Raid40"],["RAID25"]=L["Raid25"],["RAID20"]=L["Raid20"],["RAID10"]=L["Raid10"],["RAID5"]=L["Raid5"],["PARTY"]=PARTY,["SOLO"]=L["Solo"],},
+						values = {["RAID40"]=L["Raid40"],["RAID30"]=L["Raid30"],["RAID20"]=L["Raid20"],["RAID10"]=L["Raid10"],["RAID5"]=L["Raid5"],["PARTY"]=PARTY,["SOLO"]=L["Solo"],},
 						get = function(info) return groupselectvalue end,
 						set = function(info, value) groupselectvalue = value end,
 					},
